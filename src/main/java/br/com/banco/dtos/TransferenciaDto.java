@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 @Data
 public class TransferenciaDto {
-    private Long id;
     private Timestamp dataTransferencia;
     private BigDecimal valor;
     private TiposTransferenciaEnum tipo;

@@ -15,4 +15,9 @@ public interface TransferenciaRepository extends PagingAndSortingRepository<Tran
     Page<Transferencia> findByConta (Conta conta, Pageable pageable);
     Page<Transferencia> findByContaAndDataTransferenciaBetween(Conta conta, Timestamp inicio, Timestamp fim, Pageable pageable);
     Page<Transferencia> findByContaAndNomeOperadorTransacao(Conta conta, String nomeOperador, Pageable pageable);
+    Page<Transferencia> findByContaAndNomeOperadorTransacaoAndDataTransferenciaBetween(Conta conta,
+                                                                                         String nomeOperador,
+                                                                                         Timestamp inicio,
+                                                                                         Timestamp fim,
+                                                                                         Pageable pageable);
 }

@@ -50,4 +50,14 @@ public class TranferenciaService {
         return transferenciaMapper.paraPageTransferenciaDto(
                 transferenciaRepository.findByContaAndNomeOperadorTransacao(conta, nomeOperador, pageable));
     }
+
+    public Page<TransferenciaDto> buscaPorNomeOperadorEPeriodo(Long idConta, int page, String nomeOperador,
+                                                               String dataInicio, String dataFim){
+        Conta conta = contaService.buscaPeloId(idConta);
+        Pageable pageable = PageRequest.of(page, numeroItensPagina);
+
+        return transferenciaMapper.paraPageTransferenciaDto(
+                transferenciaRepository.findByContaAndNomeOperadorTransacaoAndDataTransferenciaBetween(
+                        conta, nomeOperador, dataUtil.formataData(dataInicio), dataUtil.formataData(dataFim), pageable));
+    }
 }

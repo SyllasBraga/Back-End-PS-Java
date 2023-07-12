@@ -22,22 +22,18 @@ public class TranferenciaService {
     private final ContaService contaService;
     private final TransferenciaMapper transferenciaMapper;
     private final DataUtil dataUtil;
-    private final CalculaSaldoUtil calculaSaldoUtil;
     private static final int numeroItensPagina = 4;
 
     public TranferenciaService(TransferenciaRepository transferenciaRepository, ContaService contaService,
-                               TransferenciaMapper transferenciaMapper, DataUtil dataUtil,
-                               CalculaSaldoUtil calculaSaldoUtil) {
+                               TransferenciaMapper transferenciaMapper, DataUtil dataUtil) {
         this.transferenciaRepository = transferenciaRepository;
         this.contaService = contaService;
         this.transferenciaMapper = transferenciaMapper;
         this.dataUtil = dataUtil;
-        this.calculaSaldoUtil = calculaSaldoUtil;
     }
 
     public Page<TransferenciaDto> buscaPeloNumeroConta(Long idConta, int page){
-        Conta conta = contaService.buscaPeloId(idConta);
-        conta.setSaldoTotal(calculaSaldoUtil.calculaSaldoConta(conta));
+        Conta conta = contaService.iniciarConta(idConta);
         Pageable pageable = PageRequest.of(page, numeroItensPagina);
 
         return transferenciaMapper.paraPageTransferenciaDto(transferenciaRepository.findByConta(conta, pageable));
@@ -46,9 +42,8 @@ public class TranferenciaService {
     public Page<TransferenciaDto> buscaPorUmPeriodo(Long idConta, int page, String dataInicio, String dataFim){
         Timestamp dataInicioFormatada = dataUtil.formataData(dataInicio);
         Timestamp dataFimFormatada = dataUtil.formataData(dataFim);
-        Conta conta = contaService.buscaPeloId(idConta);
-        conta.setSaldoTotal(calculaSaldoUtil.calculaSaldoConta(conta));
-        conta.setSaldoPeriodo(calculaSaldoUtil.calculaSaldoPeriodo(conta, dataInicioFormatada, dataFimFormatada));
+        Conta conta = contaService.iniciarContaPeriodo(idConta, dataInicioFormatada, dataFimFormatada);
+
         Pageable pageable = PageRequest.of(page, numeroItensPagina);
 
         return transferenciaMapper.paraPageTransferenciaDto(
@@ -57,8 +52,7 @@ public class TranferenciaService {
     }
 
     public Page<TransferenciaDto> buscaPorNomeOperador(Long idConta, int page, String nomeOperador){
-        Conta conta = contaService.buscaPeloId(idConta);
-        conta.setSaldoTotal(calculaSaldoUtil.calculaSaldoConta(conta));
+        Conta conta = contaService.iniciarConta(idConta);
         Pageable pageable = PageRequest.of(page, numeroItensPagina);
 
         return transferenciaMapper.paraPageTransferenciaDto(
@@ -69,13 +63,11 @@ public class TranferenciaService {
                                                                String dataInicio, String dataFim){
         Timestamp dataInicioFormatada = dataUtil.formataData(dataInicio);
         Timestamp dataFimFormatada = dataUtil.formataData(dataFim);
-        Conta conta = contaService.buscaPeloId(idConta);
-        conta.setSaldoTotal(calculaSaldoUtil.calculaSaldoConta(conta));
-        conta.setSaldoPeriodo(calculaSaldoUtil.calculaSaldoPeriodo(conta, dataInicioFormatada, dataFimFormatada));
+        Conta conta = contaService.iniciarContaPeriodo(idConta, dataInicioFormatada, dataFimFormatada);
         Pageable pageable = PageRequest.of(page, numeroItensPagina);
 
         return transferenciaMapper.paraPageTransferenciaDto(
                 transferenciaRepository.findByContaAndNomeOperadorTransacaoAndDataTransferenciaBetween(
-                        conta, nomeOperador, dataUtil.formataData(dataInicio), dataUtil.formataData(dataFim), pageable));
+                        conta, nomeOperador, dataInicioFormatada, dataFimFormatada, pageable));
     }
 }

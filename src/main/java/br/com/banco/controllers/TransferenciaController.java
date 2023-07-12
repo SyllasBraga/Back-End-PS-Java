@@ -33,4 +33,11 @@ public class TransferenciaController {
                                                                     @RequestParam(value = "data-fim") String dataFim){
         return ResponseEntity.ok().body(tranferenciaService.buscaPorUmPeriodo(idConta, page, dataInicio, dataFim));
     }
+
+    @GetMapping(path = "/nome-operador")
+    public ResponseEntity<Page<TransferenciaDto>> buscaPeloNomeOperador(@RequestParam(value = "id-conta") Long idConta,
+                                                                        @RequestParam(value = "page") int page,
+                                                                        @RequestParam(value = "nome-operador") String nomeOperador){
+        return ResponseEntity.ok().body(tranferenciaService.buscaPorNomeOperador(idConta, page, nomeOperador));
+    }
 }

@@ -14,4 +14,5 @@ import java.sql.Timestamp;
 public interface TransferenciaRepository extends PagingAndSortingRepository<Transferencia, Long> {
     Page<Transferencia> findByConta (Conta conta, Pageable pageable);
     Page<Transferencia> findByContaAndDataTransferenciaBetween(Conta conta, Timestamp inicio, Timestamp fim, Pageable pageable);
+    Page<Transferencia> findByContaAndNomeOperadorTransacao(Conta conta, String nomeOperador, Pageable pageable);
 }

@@ -1,9 +1,12 @@
 package br.com.banco.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Component
 public class DataUtil {
 
     public Timestamp formataData(String data) {

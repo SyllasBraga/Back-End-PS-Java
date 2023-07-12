@@ -3,12 +3,15 @@ package br.com.banco.mapper;
 import br.com.banco.dtos.TransferenciaDto;
 import br.com.banco.entities.Transferencia;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class TransferenciaMapper {
 
     private final ModelMapper modelMapper;

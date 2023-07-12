@@ -5,6 +5,7 @@ import br.com.banco.entities.Conta;
 import br.com.banco.entities.Transferencia;
 import br.com.banco.mapper.TransferenciaMapper;
 import br.com.banco.repositories.TransferenciaRepository;
+import br.com.banco.utils.DataUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,12 +25,15 @@ public class TranferenciaService {
     private final TransferenciaRepository transferenciaRepository;
     private final ContaService contaService;
     private final TransferenciaMapper transferenciaMapper;
+    private final DataUtil dataUtil;
     private static final int numeroItensPagina = 4;
 
-    public TranferenciaService(TransferenciaRepository transferenciaRepository, ContaService contaService, TransferenciaMapper transferenciaMapper) {
+    public TranferenciaService(TransferenciaRepository transferenciaRepository, ContaService contaService,
+                               TransferenciaMapper transferenciaMapper, DataUtil dataUtil) {
         this.transferenciaRepository = transferenciaRepository;
         this.contaService = contaService;
         this.transferenciaMapper = transferenciaMapper;
+        this.dataUtil = dataUtil;
     }
 
     public Page<TransferenciaDto> buscaPeloNumeroConta(Long idConta, int page){
@@ -43,21 +47,8 @@ public class TranferenciaService {
         Conta conta = contaService.buscaPeloId(idConta);
         Pageable pageable = PageRequest.of(page, numeroItensPagina);
 
-        return transferenciaMapper.paraPageTransferenciaDto(transferenciaRepository.findByContaAndDataTransferenciaBetween(conta, formataData(dataInicio),
-                formataData(dataFim), pageable));
-    }
-
-    private Timestamp formataData(String data) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Timestamp dataFormatada = new Timestamp(dateFormat.parse(data).getTime());
-            return dataFormatada;
-        } catch (ParseException e) {
-            try {
-                throw new ParseException("Erro na conversão das datas", e.getErrorOffset());
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        return transferenciaMapper.paraPageTransferenciaDto(
+                transferenciaRepository.findByContaAndDataTransferenciaBetween(conta, dataUtil.formataData(dataInicio),
+                dataUtil.formataData(dataFim), pageable));
     }
 }

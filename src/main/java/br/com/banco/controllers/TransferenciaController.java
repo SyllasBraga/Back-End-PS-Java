@@ -25,4 +25,12 @@ public class TransferenciaController {
                                                                        @RequestParam(value = "page") int page){
         return ResponseEntity.ok().body(tranferenciaService.buscaPeloNumeroConta(idConta, page));
     }
+
+    @GetMapping(path = "/periodo")
+    public ResponseEntity<Page<TransferenciaDto>> buscaPorUmPeriodo(@RequestParam(value = "id-conta") Long idConta,
+                                                                    @RequestParam(value = "page") int page,
+                                                                    @RequestParam(value = "data-inicio") String dataInicio,
+                                                                    @RequestParam(value = "data-fim") String dataFim){
+        return ResponseEntity.ok().body(tranferenciaService.buscaPorUmPeriodo(idConta, page, dataInicio, dataFim));
+    }
 }

@@ -15,13 +15,14 @@ import java.sql.Timestamp;
 @Entity
 public class Transferencia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Timestamp dataTransferencia;
     private BigDecimal valor;
     @Enumerated(value = EnumType.STRING)
     private TiposTransferenciaEnum tipo;
     private String nomeOperadorTransacao;
-    @OneToMany
-    private Conta conta_id;
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Conta conta;
 }

@@ -1,5 +1,6 @@
 package br.com.banco.controllers;
 
+import br.com.banco.dtos.TransferenciaDto;
 import br.com.banco.entities.Transferencia;
 import br.com.banco.services.TranferenciaService;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,8 @@ public class TransferenciaController {
     }
 
     @GetMapping(path = "/conta")
-    public ResponseEntity<Page<Transferencia>> buscaPeloNumeroConta(@RequestParam(value = "id-conta") Long idConta,
-                                                                    @RequestParam(value = "page") int page){
+    public ResponseEntity<Page<TransferenciaDto>> buscaPeloNumeroConta(@RequestParam(value = "id-conta") Long idConta,
+                                                                       @RequestParam(value = "page") int page){
         return ResponseEntity.ok().body(tranferenciaService.buscaPeloNumeroConta(idConta, page));
     }
 }

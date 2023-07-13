@@ -1,5 +1,7 @@
 package br.com.banco.utils;
 
+import br.com.banco.exceptions.DataIncorretaException;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -12,14 +14,14 @@ public class DataUtil {
     public Timestamp formataData(String data) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Timestamp dataFormatada = new Timestamp(dateFormat.parse(data).getTime());
-            return dataFormatada;
+            return new Timestamp(dateFormat.parse(data).getTime());
         } catch (ParseException e) {
             try {
-                throw new ParseException("Erro na conversão das datas", e.getErrorOffset());
-            } catch (ParseException ex) {
+                throw new DataIncorretaException("Data inserida inválida: Erro na conversão das datas", e.getErrorOffset());
+            } catch (DataIncorretaException ex) {
                 throw new RuntimeException(ex);
             }
         }
     }
 }
+

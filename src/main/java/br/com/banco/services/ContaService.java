@@ -20,7 +20,7 @@ public class ContaService {
     }
 
     public Conta buscaPeloId(Long id){
-        return contaRepository.findById(id).orElseThrow(()-> new NotFoundException("Nenhuma conta encontrada"));
+        return contaRepository.findById(id).orElseThrow(()-> new NotFoundException("Conta não encontrada."));
     }
 
     public Conta iniciarConta(Long idConta){

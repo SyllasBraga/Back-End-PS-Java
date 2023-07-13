@@ -1,8 +1,7 @@
 package br.com.banco.controllers;
 
 import br.com.banco.dtos.TransferenciaDto;
-import br.com.banco.entities.Transferencia;
-import br.com.banco.services.TranferenciaService;
+import br.com.banco.services.TransferenciaService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/transferencias")
 public class TransferenciaController {
 
-    private final TranferenciaService tranferenciaService;
+    private final TransferenciaService transferenciaService;
 
-    public TransferenciaController(TranferenciaService tranferenciaService) {
-        this.tranferenciaService = tranferenciaService;
+    public TransferenciaController(TransferenciaService transferenciaService) {
+        this.transferenciaService = transferenciaService;
     }
 
     @GetMapping(path = "/conta")
     public ResponseEntity<Page<TransferenciaDto>> buscaPeloNumeroConta(@RequestParam(value = "id-conta") Long idConta,
                                                                        @RequestParam(value = "page") int page){
-        return ResponseEntity.ok().body(tranferenciaService.buscaPeloNumeroConta(idConta, page));
+        return ResponseEntity.ok().body(transferenciaService.buscaPeloNumeroConta(idConta, page));
     }
 
     @GetMapping(path = "/periodo")
@@ -31,14 +30,14 @@ public class TransferenciaController {
                                                                     @RequestParam(value = "page") int page,
                                                                     @RequestParam(value = "data-inicio") String dataInicio,
                                                                     @RequestParam(value = "data-fim") String dataFim){
-        return ResponseEntity.ok().body(tranferenciaService.buscaPorUmPeriodo(idConta, page, dataInicio, dataFim));
+        return ResponseEntity.ok().body(transferenciaService.buscaPorUmPeriodo(idConta, page, dataInicio, dataFim));
     }
 
     @GetMapping(path = "/nome-operador")
     public ResponseEntity<Page<TransferenciaDto>> buscaPeloNomeOperador(@RequestParam(value = "id-conta") Long idConta,
                                                                         @RequestParam(value = "page") int page,
                                                                         @RequestParam(value = "nome-operador") String nomeOperador){
-        return ResponseEntity.ok().body(tranferenciaService.buscaPorNomeOperador(idConta, page, nomeOperador));
+        return ResponseEntity.ok().body(transferenciaService.buscaPorNomeOperador(idConta, page, nomeOperador));
     }
 
     @GetMapping(path = "/nome-operador-periodo")
@@ -48,7 +47,7 @@ public class TransferenciaController {
                                                                 @RequestParam(value = "nome-operador") String nomeOperador,
                                                                 @RequestParam(value = "data-inicio") String dataInicio,
                                                                 @RequestParam(value = "data-fim") String dataFim){
-        return ResponseEntity.ok().body(tranferenciaService.buscaPorNomeOperadorEPeriodo(idConta, page, nomeOperador,
+        return ResponseEntity.ok().body(transferenciaService.buscaPorNomeOperadorEPeriodo(idConta, page, nomeOperador,
                 dataInicio, dataFim));
     }
 }

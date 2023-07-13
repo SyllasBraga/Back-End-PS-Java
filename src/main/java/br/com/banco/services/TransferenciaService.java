@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 @Service
-public class TranferenciaService {
+public class TransferenciaService {
 
     private final TransferenciaRepository transferenciaRepository;
     private final ContaService contaService;
@@ -21,8 +21,8 @@ public class TranferenciaService {
     private final DataUtil dataUtil;
     private static final int NUMERO_ITENS_PAGINA = 4;
 
-    public TranferenciaService(TransferenciaRepository transferenciaRepository, ContaService contaService,
-                               TransferenciaMapper transferenciaMapper, DataUtil dataUtil) {
+    public TransferenciaService(TransferenciaRepository transferenciaRepository, ContaService contaService,
+                                TransferenciaMapper transferenciaMapper, DataUtil dataUtil) {
         this.transferenciaRepository = transferenciaRepository;
         this.contaService = contaService;
         this.transferenciaMapper = transferenciaMapper;

@@ -2,8 +2,6 @@ package br.com.banco.controller;
 
 import br.com.banco.controllers.TransferenciaController;
 import br.com.banco.dtos.TransferenciaDto;
-import br.com.banco.entities.Conta;
-import br.com.banco.entities.Transferencia;
 import br.com.banco.enums.TiposTransferenciaEnum;
 import br.com.banco.services.TransferenciaService;
 import org.junit.jupiter.api.BeforeEach;

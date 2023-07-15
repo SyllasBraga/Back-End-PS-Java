@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/conta")
+@RequestMapping("/contas")
 public class ContaController {
 
     private final ContaService contaService;

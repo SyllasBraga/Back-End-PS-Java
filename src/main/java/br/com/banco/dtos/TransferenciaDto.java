@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransferenciaDto {
+    private Long id;
     private Timestamp dataTransferencia;
     private BigDecimal valor;
     private TiposTransferenciaEnum tipo;

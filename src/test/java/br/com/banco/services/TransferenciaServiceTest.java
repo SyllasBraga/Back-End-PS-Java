@@ -129,7 +129,7 @@ class TransferenciaServiceTest {
         pageable = PageRequest.of(PAGE, NUMERO_ITENS_PAGINA);
         transferencia = new Transferencia(1L, Timestamp.valueOf("2020-09-01 12:00:00"), BigDecimal.ZERO,
                 TiposTransferenciaEnum.TRANSFERENCIA, "Beltrano", conta);
-        transferenciaDto = new TransferenciaDto(Timestamp.valueOf("2020-09-01 12:00:00"), BigDecimal.ZERO,
+        transferenciaDto = new TransferenciaDto(1L, Timestamp.valueOf("2020-09-01 12:00:00"), BigDecimal.ZERO,
                 TiposTransferenciaEnum.TRANSFERENCIA, "Beltrano", null);
         pageTransferencia = new PageImpl<>(List.of(transferencia), pageable, 1);
         pageTransferenciaDto = new PageImpl<>(List.of(transferenciaDto), pageable, 1);

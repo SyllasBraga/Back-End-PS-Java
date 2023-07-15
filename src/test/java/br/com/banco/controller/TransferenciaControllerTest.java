@@ -98,7 +98,7 @@ class TransferenciaControllerTest {
 
     private void iniciarDados(){
         pageable = PageRequest.of(PAGE, NUMERO_ITENS_PAGINA);
-        transferenciaDto = new TransferenciaDto(Timestamp.valueOf("2020-09-01 12:00:00"), BigDecimal.ZERO,
+        transferenciaDto = new TransferenciaDto(1L, Timestamp.valueOf("2020-09-01 12:00:00"), BigDecimal.ZERO,
                 TiposTransferenciaEnum.TRANSFERENCIA, "Beltrano", null);
         pageTransferenciaDto = new PageImpl<>(List.of(transferenciaDto), pageable, 1);
     }

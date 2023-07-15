@@ -1,7 +1,9 @@
 package br.com.banco.services;
 
+import br.com.banco.dtos.ContaDto;
 import br.com.banco.entities.Conta;
 import br.com.banco.exceptions.NotFoundException;
+import br.com.banco.mapper.ContaMapper;
 import br.com.banco.repositories.ContaRepository;
 import br.com.banco.utils.CalculaSaldoUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +29,9 @@ class ContaServiceTest {
     private static final String NOME_RESPONSAVEL = "Fulano";
     private static final BigDecimal SALDO = BigDecimal.ZERO;
     private Conta conta;
+    private ContaDto contaDto;
+    private List<Conta> listaConta;
+    private List<ContaDto> listaContaDto;
     private Optional<Conta> optConta;
     private Timestamp dataInicioFormatada;
     private Timestamp dataFimFormatada;
@@ -36,6 +42,8 @@ class ContaServiceTest {
     private ContaRepository repository;
     @Mock
     private CalculaSaldoUtil calculaSaldoUtil;
+    @Mock
+    private ContaMapper contaMapper;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +59,17 @@ class ContaServiceTest {
         Conta contaRecebida = service.buscaPeloId(ID_CONTA);
 
         assertEquals(Conta.class, contaRecebida.getClass());
+    }
+
+    @Test
+    @DisplayName("Método: buscarTodasContas()")
+    void buscaTodasContaRetornarListaContaDto(){
+        when(repository.findAll()).thenReturn(listaConta);
+        when(contaMapper.toContaDto(any())).thenReturn(contaDto);
+
+        List<ContaDto> contaDtosRecebidas = service.buscarTodasContas();
+
+        assertEquals(ContaDto.class, contaDtosRecebidas.get(0).getClass());
     }
 
     @Test
@@ -90,8 +109,11 @@ class ContaServiceTest {
 
     private void iniciarDados() {
         conta = new Conta(ID_CONTA, NOME_RESPONSAVEL, BigDecimal.ZERO, BigDecimal.ZERO);
+        contaDto = new ContaDto(ID_CONTA, NOME_RESPONSAVEL, BigDecimal.ZERO, BigDecimal.ZERO);
         optConta = Optional.of(conta);
         dataInicioFormatada = Timestamp.valueOf("2019-01-01 12:00:00");
         dataFimFormatada = Timestamp.valueOf("2021-04-01 12:12:04");
+        listaConta = List.of(conta);
+        listaContaDto = List.of(contaDto);
     }
 }
